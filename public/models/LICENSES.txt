@@ -1,0 +1,58 @@
+SleekViber — active asset credits
+
+MacBook — Nicholas-3D
+Source: https://sketchfab.com/3d-models/macbook-07f012fbd3bb4c37a1b9ed08533ee403
+License: CC BY 4.0 https://creativecommons.org/licenses/by/4.0/
+Distributed by @space_holder/react-widgets 0.3.1.
+Template: https://github.com/SpaceHolderdJs/react-widgets (MIT)
+Changes: source PBR detail retained with monochrome albedo; normalized scale, custom screen artwork, studio lighting, source-part assembly and hinge animation.
+Full upstream notices: /credits/REACT-WIDGETS-NOTICE.txt and /credits/REACT-WIDGETS-LICENSE.txt
+
+Circuit Board — Benny Weimer / Poly Haven
+Source: https://polyhaven.com/a/circuit_board
+License: CC0 https://polyhaven.com/license
+Changes: local 1K PBR maps, Draco compression, monochrome albedo, normalized scale and studio placement. The artist's geometry and maps are preserved.
+
+iPhone 18 Pro Max High Quality 3D Model — ProAnimator
+Source: https://sketchfab.com/3d-models/iphone-18-pro-max-high-quality-3d-model-5e40716caa274a789de5b17798ee2e78
+License: CC BY 4.0 https://creativecommons.org/licenses/by/4.0/
+Distributed by @space_holder/react-widgets 0.3.1.
+Changes: upstream optimized source model, normalized scale, neutral chassis and custom screen artwork.
+Full upstream notices: /credits/REACT-WIDGETS-NOTICE.txt and /credits/REACT-WIDGETS-LICENSE.txt
+
+Silk background and SplitText pattern — David Haz / React Bits
+Sources: https://reactbits.dev/backgrounds/silk and https://reactbits.dev/text-animations/split-text
+Code: https://github.com/DavidHDev/react-bits/tree/main/src/ts-tailwind
+License: MIT + Commons Clause. Full notice: /credits/REACT-BITS-LICENSE.txt
+Changes: shared R3F Canvas, graphite/silver palette, reading-area attenuation and scoped GSAP cleanup. Used within this website, not as a standalone component product.
+
+Deltha — Vultype Type Foundry
+Source: user-provided new font.zip
+Locally hosted regular display face, used for the local testing preview.
+Supplied demo/trial license: personal, testing and non-profit only; commercial license required for business or promotional use.
+Original notice: app/fonts/Deltha-LICENSE.pdf
+
+Clash Display — Indian Type Foundry / Fontshare (admin display)
+Source: https://www.fontshare.com/fonts/clash-display
+Locally hosted variable display face.
+Full license: app/fonts/ClashDisplay-LICENSE.txt
+
+Studio Small 03 HDR — Greg Zaal / Poly Haven
+Source: https://polyhaven.com/a/studio_small_03
+License: CC0 https://polyhaven.com/license
+Used as a local studio lighting environment, not a background image.
+
+General Sans — Indian Type Foundry / Fontshare
+Source: https://www.fontshare.com/fonts/general-sans
+Locally hosted weights: regular, medium and semibold.
+Full license: app/fonts/GeneralSans-LICENSE.txt
+
+Retained inactive assets (not loaded on the landing page)
+- Floating laptop — Poimandres examples (MIT): https://github.com/pmndrs/examples/tree/main/examples/floating-laptop — /models/PMNDRS-LICENSE.txt
+- Laptop — Alex Safayan (CC BY 3.0): https://poly.pizza/m/27hcX_w47Jb
+- Glass Broken Window — Eric Chadwick / Wayfair (CC BY 4.0): https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/GlassBrokenWindow
+- Server rack — Jeremy Eyring (CC BY 3.0): https://poly.pizza/m/6ijQclm8jxw
+- Padlock, cut gem — Quaternius (CC0): https://poly.pizza/m/2ZSHgKVr3F and https://poly.pizza/m/kbgiCMzdxg
+- Quartz — iPoly3D (CC0): https://poly.pizza/m/7iHQpCXTb7
+- Studio Small 03 HDR — Greg Zaal / Poly Haven (CC0): https://polyhaven.com/a/studio_small_03
+

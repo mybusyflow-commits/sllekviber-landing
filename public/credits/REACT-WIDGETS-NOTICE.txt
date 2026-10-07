@@ -1,0 +1,176 @@
+THIRD-PARTY ASSETS
+==================
+
+The MIT licence in LICENSE covers this repository's source code only. It does
+not cover the binary assets in assets/, which come from elsewhere and carry
+their own terms.
+
+Each asset is listed below with its licence, the credit that licence requires,
+and what was changed from the original. **If you ship a build that contains one
+of these files, its credit has to travel with it** — including into bundled or
+minified output, where it is easy to lose by accident.
+
+One entry per asset. Add to this file whenever an asset is added; see
+"Adding an asset" at the end.
+
+
+--------------------------------------------------------------------------
+assets/laptop.glb                                    used by <LaptopReveal>
+--------------------------------------------------------------------------
+
+Licence
+    CC-BY-4.0 — http://creativecommons.org/licenses/by/4.0/
+    Commercial use is allowed. Attribution is required.
+
+Required credit (copy verbatim wherever the model is shipped or shown)
+    This work is based on "MacBook"
+    (https://sketchfab.com/3d-models/macbook-07f012fbd3bb4c37a1b9ed08533ee403)
+    by Nicholas-3D (https://sketchfab.com/Nicholas01)
+    licensed under CC-BY-4.0
+    (http://creativecommons.org/licenses/by/4.0/)
+
+Changes from the original
+  - converted from glTF + loose textures to a single binary .glb;
+  - levelled and centred, so the base sits flat on y = 0;
+  - a "LidPivot" empty was added on the hinge axis, so the lid's opening
+    angle is one rotation rather than a transform to be derived;
+  - the display rectangle and hinge position were measured and recorded in
+    asset.extras, so a replacement model can be checked against them;
+  - the maker's mark was removed from the baseColor and metallicRoughness
+    textures. The geometry is unchanged.
+
+
+--------------------------------------------------------------------------
+assets/foldable.glb                                used by <FoldableReveal>
+--------------------------------------------------------------------------
+
+Licence
+    CC-BY-4.0 — http://creativecommons.org/licenses/by/4.0/
+    Commercial use is allowed. Attribution is required.
+
+Required credit (copy verbatim wherever the model is shipped or shown)
+    This work is based on "iPhone Duo 3D Model - By Pikkme Studio"
+    (https://sketchfab.com/3d-models/iphone-duo-3d-model-by-pikkme-studio-d2ca6bff92c141d1b1c5759b19d533e0)
+    by PikkmeStudios (https://sketchfab.com/stockpikkme)
+    licensed under CC-BY-4.0
+    (http://creativecommons.org/licenses/by/4.0/)
+
+Changes from the original
+  - the download is four identical copies of the device; one was kept and the
+    other three discarded;
+  - the meshes named "apple-logo" were deleted, and material names carrying a
+    manufacturer's name were renamed to what the part is ("chassis", "trim",
+    "frame", "display");
+  - the texture's two screen regions were blanked. They carried a rendered
+    phone home screen — a manufacturer's application icons, its UI and its
+    wordmark — and a stock photograph. The model's CC-BY licence covers the
+    modeller's own work and cannot license any of that, so none of it ships
+    here. The rest of the atlas, which is the camera module and neutral
+    panels, is unchanged apart from re-encoding;
+  - the 223-node hierarchy was flattened and the device re-posed FLAT OPEN,
+    with the hinge on the Y axis through the origin and one bare pivot group
+    per wing, so a fold is one rotation per wing at runtime. The inner display
+    spans the crease in the original, so its triangles were divided between
+    the two wings at the hinge;
+  - welded, decimated and quantised (KHR_mesh_quantization) for size;
+  - the display rectangle and hinge were measured and recorded in
+    asset.extras.
+
+--------------------------------------------------------------------------
+assets/handset.glb                                    used by <PhoneReveal>
+--------------------------------------------------------------------------
+
+Licence
+    CC-BY-4.0 — http://creativecommons.org/licenses/by/4.0/
+    Commercial use is allowed. Attribution is required.
+
+Required credit (copy verbatim wherever the model is shipped or shown)
+    This work is based on "iPhone 18 Pro Max - High Quality 3D Model"
+    (https://sketchfab.com/3d-models/iphone-18-pro-max-high-quality-3d-model-5e40716caa274a789de5b17798ee2e78)
+    by Pro Animator (https://sketchfab.com/Riju.mandal)
+    licensed under CC-BY-4.0
+    (http://creativecommons.org/licenses/by/4.0/)
+
+Changes from the original
+  - the embossed maker's mark on the back was erased. It is not a decal: the
+    modeller cut the shape out of the back panel and filled it with its own
+    mesh carrying its own material, and the two share every boundary vertex
+    to six decimal places. Deleting the insert would therefore have left a
+    hole in the exact shape of the mark — the mark again, in negative — so
+    its triangles were given the surrounding panel's material instead. What
+    ships is one continuous, unmarked surface;
+  - every material was renamed after the part it covers ("chassis", "trim",
+    "camera-plate", "display-panel" and so on). The originals were named for
+    a model designation, and a material name is the part of an asset most
+    likely to be quoted in application code;
+  - the studio ground plane was discarded;
+  - the roughly 5 degree lean the scene was posed with was undone, and the
+    model re-centred on its own bounding box and scaled to 0.72 units tall,
+    then turned to face +Z;
+  - the textures were rebuilt at 64 to 96 pixels and one normal map dropped.
+    The original carried about 4 MB of 1024-square maps for a speaker grille
+    weave, a mesh noise and a photograph of a flash lens, none of which is
+    more than a few hundredths of a unit across at runtime. They were checked
+    for marks first and carry none;
+  - welded, decimated and quantised (KHR_mesh_quantization) for size;
+  - the display rectangle was measured and recorded in asset.extras.
+
+--------------------------------------------------------------------------
+Replacing an asset
+--------------------------------------------------------------------------
+
+Every widget takes the asset it uses as a prop — <LaptopReveal> takes
+`modelUrl` — so nothing here is baked in. If you point a widget at your own
+file and stop shipping ours, that asset's obligations stop applying to your
+build, and you can delete its entry below the line in your fork.
+
+Do not delete an entry while still shipping the file it describes. For CC-BY
+in particular, dropping the credit is the one thing the licence does not
+allow, and a bundler will not warn you.
+
+
+--------------------------------------------------------------------------
+Adding an asset
+--------------------------------------------------------------------------
+
+Before committing a new model, texture, font or sound:
+
+  1. Check the licence actually permits redistribution inside an npm package,
+     and commercial use. "Free to download" is not a licence. CC-BY, CC0 and
+     the permissive code licences are fine; CC-BY-NC and most marketplace
+     "standard" licences are not.
+
+  2. Check it for third-party marks, and check all three places they hide. A
+     model of a real product usually carries the manufacturer's logo in a
+     texture; sometimes as its own mesh; and sometimes as a shape cut out of
+     a panel and filled with an insert, where deleting the insert leaves the
+     mark behind as a hole. A trademark is not covered by the asset's own
+     licence however permissive that licence is. Remove the mark — filling
+     or absorbing it, not merely deleting it — or do not ship the asset.
+
+     Screen content counts too. A rendered home screen is a manufacturer's
+     icons, UI and wordmark, and a photograph in a mockup is someone else's
+     photograph.
+
+  3. Add an entry above in the same shape: file path, which widget uses it,
+     licence with URL, the credit verbatim as the author worded it, and every
+     change made to the original. Record measurements the runtime depends on
+     in asset.extras, as laptop.glb does.
+
+  4. If the licence is share-alike (CC-BY-SA, GPL-family), stop and think
+     first — it can reach further than the asset and is usually the wrong
+     choice for a package other people embed.
+
+
+--------------------------------------------------------------------------
+Trademarks
+--------------------------------------------------------------------------
+
+Trademarks named in an asset's original title, source URL or author credit
+belong to their owners, and appear here only because the licence requires the
+credit to be reproduced as written.
+
+This project is not affiliated with, endorsed by, or sponsored by any hardware
+manufacturer. The assets shipped here carry no maker's mark or other brand
+identification, and the component is named for what it does rather than for
+any product it might resemble.

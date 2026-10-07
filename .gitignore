@@ -1,0 +1,33 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+
+# Next.js
+/.next/
+/.next-local/
+/out/
+/build/
+next-env.d.ts
+
+# local data and secrets
+.env*
+!.env.example
+data/*.db
+data/*.db-*
+data/*.sqlite*
+
+# downloaded source archives and local design tooling
+/three.js-master/
+/gsap-public/
+/__MACOSX/
+/.asset-sources/
+/.agents/
+/.impeccable/
+*.tsbuildinfo
+
+# miscellaneous
+.DS_Store
+*.pem
+*.log
+.vercel
