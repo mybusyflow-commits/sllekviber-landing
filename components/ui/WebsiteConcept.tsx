@@ -1,0 +1,14 @@
+import { ArrowRight, Check, LockKeyhole, Search, ShieldCheck, Database, MousePointer2 } from "lucide-react";
+
+// Concept content for the React Bits templates, not a released product editor.
+export function WebsiteConcept({ kind }: { kind: "design" | "connection" | "data" | "access" | "journey" | "search" }) {
+  if (kind === "design") return <div className="concept-page">
+    <div className="concept-page-nav"><b>SleekViber</b><span>Design with a point of view</span></div>
+    <div className="concept-page-body"><strong>Beyond<br /><em>almost.</em></strong><p>A considered frontend.<br />A complete experience.</p><span className="concept-page-action">Your next build <ArrowRight size={17} /></span></div>
+    <div className="concept-page-foundation"><span>Typography</span><span>Layout</span><span>Motion</span></div>
+  </div>;
+  if (kind === "access") return <div className="concept-access"><ShieldCheck size={43} strokeWidth={1.2} /><strong>Access comes first.</strong><div className="concept-permissions"><span /><b>Visitor</b><b>Member</b><span>Public page</span><Check size={17} /><Check size={17} /><span>Private area</span><LockKeyhole size={16} /><Check size={17} /><span>Account settings</span><LockKeyhole size={16} /><Check size={17} /></div><p>Different roles. Clear boundaries.</p></div>;
+  if (kind === "search") return <div className="concept-search"><div className="concept-search-input"><Search size={17} /><span>vibe coding, done right</span></div><div className="concept-search-result"><small>SleekViber</small><strong>Your next build starts here.</strong><p>Original design, connected data and complete user journeys. A platform in development.</p></div><div className="concept-search-tags"><span>Page title</span><span>Description</span><span>Semantic structure</span></div></div>;
+  if (kind === "journey") return <div className="concept-journey"><MousePointer2 size={35} strokeWidth={1.2} /><strong>Every click goes somewhere.</strong><div>{["Start", "Submit", "Confirmation"].map((step, i) => <span key={step}><Check size={18} /><b>{step}</b>{i < 2 && <ArrowRight size={18} />}</span>)}</div><p>From the first action to a clear outcome.</p></div>;
+  return <div className="concept-data"><div className="concept-data-title"><Database size={27} strokeWidth={1.3} /><strong>{kind === "data" ? "Data that has a home." : "Behind every interaction."}</strong></div><div className="concept-save-path"><span>Answer</span><ArrowRight size={18} /><span>Validate</span><ArrowRight size={18} /><span>Save <Check size={14} /></span></div><div className="concept-table"><div><b>Response schema</b><span>Database</span></div>{[["q1", "Interest"], ["q2", "Pain points"], ["timestamp", "Submitted at"]].map(([field, label]) => <p key={field}><code>{field}</code><span>{label}</span></p>)}</div><span className="concept-data-note">A form should end with a saved answer.</span></div>;
+}

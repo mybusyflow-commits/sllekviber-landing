@@ -6,6 +6,7 @@
 # Next.js
 /.next/
 /.next-local/
+/.local/
 /out/
 /build/
 next-env.d.ts
@@ -16,6 +17,7 @@ next-env.d.ts
 data/*.db
 data/*.db-*
 data/*.sqlite*
+data/backups/
 
 # downloaded source archives and local design tooling
 /three.js-master/

@@ -1,0 +1,15 @@
+{
+  "projectName": "sleekviber",
+  "projectId": "prj_cNvdgI5ywrgbDsSgyxUBSNfNmP81",
+  "accountId": "team_wfmcXebLjsWbM3cLZASlgmow",
+  "nodeVersion": "24.x",
+  "status": "prepared-not-deployed",
+  "productionDeploymentCreated": false,
+  "latestAccessCheck": {
+    "status": "forbidden",
+    "httpStatus": 403,
+    "scope": "shreyanshkrishna279-6139s-projects",
+    "availableTeamCount": 0,
+    "cliFallbackAvailable": false
+  }
+}

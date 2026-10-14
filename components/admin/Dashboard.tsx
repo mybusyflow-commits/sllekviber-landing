@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import gsap from "gsap";
 import { ArrowUpRight, LogOut, RefreshCw, CircleAlert } from "lucide-react";
+import { requestJson } from "@/lib/client-request";
 
 type Count = { option: string; count: number };
 type Stats = {
@@ -47,27 +48,36 @@ export default function Dashboard() {
   const [newCount, setNewCount] = useState(0);
   const previousTotal = useRef<number | null>(null);
   const dashboard = useRef<HTMLElement>(null);
+  const activeRequest = useRef<AbortController | null>(null);
   const chartSignature = stats && stats.total ? [...stats.q1, ...stats.q2].map(item => `${item.option}:${item.count}`).join("|") : "";
   const fetchStats = useCallback(async (initial = false) => {
+    if (activeRequest.current) return;
+    const controller = new AbortController();
+    activeRequest.current = controller;
     if (!initial) setRefreshing(true);
     try {
-      const response = await fetch("/api/responses/stats", { cache: "no-store" });
+      const { response, data: next } = await requestJson<Stats>("/api/responses/stats", { cache: "no-store", signal: controller.signal });
       if (response.status === 401) { router.replace("/admin/login"); return; }
       if (!response.ok) throw new Error("Dashboard data is unavailable. Try refreshing.");
-      const next = await response.json() as Stats;
       if (previousTotal.current !== null && next.total > previousTotal.current) setNewCount(next.total - previousTotal.current);
       previousTotal.current = next.total;
       setStats(next); setError("");
-    } catch (caught) { setError(caught instanceof Error ? caught.message : "Could not load responses."); }
-    finally { setLoading(false); setRefreshing(false); }
+    } catch (caught) { if (!controller.signal.aborted) setError(caught instanceof Error ? caught.message : "Could not load responses."); }
+    finally { activeRequest.current = null; if (!controller.signal.aborted) { setLoading(false); setRefreshing(false); } }
   }, [router]);
-  useEffect(() => { const timeout = setTimeout(() => { void fetchStats(true); }, 0); const interval = setInterval(() => { void fetchStats(); }, 15_000); return () => { clearTimeout(timeout); clearInterval(interval); }; }, [fetchStats]);
+  useEffect(() => { const timeout = setTimeout(() => { void fetchStats(true); }, 0); const interval = setInterval(() => { if (!document.hidden) void fetchStats(); }, 15_000); return () => { clearTimeout(timeout); clearInterval(interval); activeRequest.current?.abort(); }; }, [fetchStats]);
   useEffect(() => {
     if (!chartSignature || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const context = gsap.context(() => { gsap.fromTo(".chart-bar", { scaleX: 0 }, { scaleX: 1, duration: .9, stagger: .03, ease: "power4.out" }); }, dashboard);
     return () => { context.revert(); };
   }, [chartSignature]);
-  async function logout() { await fetch("/api/session/logout", { method: "POST" }); router.replace("/admin/login"); }
+  async function logout() {
+    try {
+      const { response } = await requestJson("/api/session/logout", { method: "POST" });
+      if (!response.ok) throw new Error();
+      router.replace("/admin/login"); router.refresh();
+    } catch { setError("Could not log out. Check your connection and try again."); }
+  }
 
   return <main ref={dashboard} className="min-h-svh bg-void px-6 pb-24 text-ink md:px-12 lg:px-24">
     <header className="flex flex-wrap items-center justify-between gap-4 border-b editorial-rule py-6"><div className="flex items-center gap-5"><Link href="/" className="font-display text-2xl font-semibold tracking-[-.04em]">S<span className="text-accent">/</span>V</Link><span className="h-5 w-px bg-ink/20" /><span className="font-mono text-[10px] tracking-[.2em] text-muted uppercase">BUILDER PULSE / ADMIN</span></div><div className="flex items-center gap-5"><Link href="/" className="hidden min-h-11 items-center gap-1 text-xs text-muted hover:text-ink sm:flex">View site <ArrowUpRight size={14} /></Link><button onClick={() => { setNewCount(0); void fetchStats(); }} type="button" aria-label="Refresh data" className="grid size-11 place-items-center border border-ink/20 text-muted hover:text-accent"><RefreshCw size={16} className={refreshing ? "text-accent" : ""} /></button><button onClick={logout} type="button" className="flex min-h-11 items-center gap-2 border-b editorial-rule text-xs text-muted hover:text-ink"><LogOut size={15} /> Log out</button></div></header>

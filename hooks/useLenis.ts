@@ -9,16 +9,15 @@ gsap.registerPlugin(ScrollTrigger);
 
 let activeLenis: Lenis | undefined;
 export function scrollToSection(element: HTMLElement) {
-  if (activeLenis) activeLenis.scrollTo(element, { immediate: true });
-  else element.scrollIntoView({ behavior: "instant", block: "start" });
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (activeLenis) activeLenis.scrollTo(element, { duration: 1, immediate: reduced });
+  else element.scrollIntoView({ behavior: reduced ? "instant" : "smooth", block: "start" });
 }
 
 export function useLenis(enabled: boolean) {
   useEffect(() => {
     if (!enabled) return;
-    // Lenis reads the target's scroll margin; navigation belongs to the hero
-    // and scrolls out naturally, so no fixed-header offset is needed.
-    const lenis = new Lenis({ lerp: .1, smoothWheel: true, syncTouch: false, anchors: { duration: 1.1, easing: (t: number) => 1 - Math.pow(1 - t, 4) }, stopInertiaOnNavigate: true });
+    const lenis = new Lenis({ lerp: .14, smoothWheel: true, syncTouch: false, anchors: { duration: .95, easing: (t: number) => 1 - Math.pow(1 - t, 4) }, stopInertiaOnNavigate: true });
     activeLenis = lenis;
     const raf = (time: number) => lenis.raf(time * 1000);
     lenis.on("scroll", ScrollTrigger.update);

@@ -1,57 +1,31 @@
 "use client";
-
-import dynamic from "next/dynamic";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "lenis/dist/lenis.css";
-import type { MotionState } from "@/components/three/Scene";
 import { useLenis } from "@/hooks/useLenis";
-import { useScrollProgress } from "@/hooks/useScrollProgress";
-import { useMagnetic } from "@/hooks/useMagnetic";
-
-const Scene = dynamic(() => import("@/components/three/Scene"), { ssr: false });
-
+gsap.registerPlugin(ScrollTrigger);
 export default function Experience() {
-  const motion = useRef<MotionState>({ progress: 0, velocity: 0, reduced: false, stage: 0, asset: 0, visibility: 1, turn: -.28, assembly: 1, cameraX: 0, cameraY: .35, cameraZ: 8.8, hinge: 1.797689, warmth: 0, fabricShift: 0 });
-  const [mobile, setMobile] = useState(false);
-  const [reduced, setReduced] = useState(false);
-  const [visible, setVisible] = useState(true);
-  const [webglAvailable, setWebglAvailable] = useState<boolean | null>(null);
-
+  const [smooth, setSmooth] = useState(false);
   useEffect(() => {
-    const mobileQuery = matchMedia("(max-width: 767px), (pointer: coarse)");
-    const reducedQuery = matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => { setMobile(mobileQuery.matches); setReduced(reducedQuery.matches); motion.current.reduced = reducedQuery.matches; };
-    const visibility = () => setVisible(!document.hidden);
-    update();
-    mobileQuery.addEventListener("change", update); reducedQuery.addEventListener("change", update);
-    document.addEventListener("visibilitychange", visibility);
-    const probe = document.createElement("canvas");
-    let supported = false;
-    try {
-      const context = probe.getContext("webgl2") || probe.getContext("webgl");
-      supported = Boolean(context);
-      context?.getExtension("WEBGL_lose_context")?.loseContext();
-    } catch { /* The page remains complete when a device cannot render the studio. */ }
-    const timer = window.setTimeout(() => setWebglAvailable(supported), 0);
-    return () => {
-      clearTimeout(timer);
-      mobileQuery.removeEventListener("change", update); reducedQuery.removeEventListener("change", update);
-      document.removeEventListener("visibilitychange", visibility);
-    };
+    const query = matchMedia("(prefers-reduced-motion: no-preference) and (pointer: fine)");
+    const update = () => setSmooth(query.matches);
+    update(); query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
   }, []);
-
+  useLenis(smooth);
   useEffect(() => {
-    document.documentElement.classList.toggle("reduced-experience", reduced);
-    return () => document.documentElement.classList.remove("reduced-experience");
-  }, [reduced]);
-
-  useLenis(!mobile && !reduced);
-  useMagnetic(!mobile && !reduced);
-  useScrollProgress("story-root", motion, !reduced);
-
-  return <>
-    {!reduced && visible && webglAvailable && <Scene motion={motion} mobile={mobile} />}
-  </>;
+    const media = gsap.matchMedia();
+    media.add("(prefers-reduced-motion: no-preference)", () => {
+      gsap.utils.toArray<HTMLElement>("[data-enter]").forEach(element => {
+        gsap.from(element, { y: 36, opacity: .35, duration: .9, ease: "expo.out", scrollTrigger: { trigger: element, start: "top 93%", once: true } });
+      });
+      gsap.utils.toArray<HTMLElement>(".chapter-art").forEach(element => {
+        gsap.from(element, { clipPath: "inset(8% 0 8% 0)", ease: "none", scrollTrigger: { trigger: element, start: "top 90%", end: "top 25%", scrub: .7 } });
+      });
+      gsap.from(".wire-terrain", { opacity: .1, y: 70, ease: "none", scrollTrigger: { trigger: "#reveal", start: "top 90%", end: "top 15%", scrub: .6 } });
+    });
+    return () => media.revert();
+  }, []);
+  return null;
 }
-
-

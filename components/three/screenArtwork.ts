@@ -16,6 +16,24 @@ export function makeScreenArtwork(mode: ScreenMode) {
   const draw = () => {
     const heading = getComputedStyle(document.querySelector("h1") || document.body).fontFamily;
     const body = getComputedStyle(document.body).fontFamily;
+    if (mode === "preview") {
+      ctx.fillStyle = "#f0eee9"; ctx.fillRect(0, 0, 1440, 980);
+      ctx.fillStyle = "#232323"; ctx.fillRect(0, 0, 1440, 58);
+      ctx.fillStyle = "#b6b3ae"; ctx.font = `400 18px ${body}`; ctx.fillText("form & field / website concept", 54, 37);
+      ctx.fillStyle = "#171717"; ctx.font = `500 36px ${body}`; ctx.fillText("Form & Field", 64, 132);
+      ctx.font = `400 22px ${body}`; ctx.fillText("Work", 1130, 132); ctx.fillText("Contact", 1235, 132);
+      ctx.strokeStyle = "#b9b5ad"; ctx.beginPath(); ctx.moveTo(64, 174); ctx.lineTo(1376, 174); ctx.stroke();
+      ctx.fillStyle = "#171717"; ctx.font = `500 162px ${heading}`; ctx.fillText("Ideas", 56, 383); ctx.fillText("into form.", 56, 548);
+      ctx.font = `400 30px ${body}`; ctx.fillText("Independent thinking.", 65, 630); ctx.fillText("Considered digital experiences.", 65, 675);
+      ctx.fillStyle = "#e75036"; ctx.fillRect(957, 223, 419, 600);
+      ctx.fillStyle = "#171717"; ctx.font = `500 620px ${heading}`; ctx.fillText("f", 950, 783);
+      ctx.font = `500 24px ${body}`; ctx.fillText("Explore the work →", 65, 782);
+      ctx.fillStyle = "#232323"; ctx.fillRect(0, 875, 1440, 105);
+      ctx.fillStyle = "#f0eee9"; ctx.font = `400 25px ${body}`; ctx.fillText("Strategy / Design / Development", 64, 938);
+      ctx.fillStyle = "#b6b3ae"; ctx.fillText("Made with a point of view.", 1000, 938);
+      texture.needsUpdate = true;
+      return;
+    }
     // The supplied display face is extended; fit lettering to each source screen.
     const displayText = (text: string, x: number, y: number, size: number, maxWidth: number) => {
       ctx.font = `400 ${size}px ${heading}`;

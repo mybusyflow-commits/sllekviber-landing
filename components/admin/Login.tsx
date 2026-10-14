@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowUpRight, LoaderCircle } from "lucide-react";
+import { requestJson } from "@/lib/client-request";
 
 export default function Login() {
   const router = useRouter();
@@ -11,10 +12,9 @@ export default function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   async function submit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault(); setLoading(true); setError("");
+    event.preventDefault(); if (loading) return; setLoading(true); setError("");
     try {
-      const response = await fetch("/api/session/login", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ password }) });
-      const body = await response.json() as { error?: string };
+      const { response, data: body } = await requestJson<{ error?: string }>("/api/session/login", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ password }) });
       if (!response.ok) { setError(body.error || "Could not sign in."); return; }
       router.replace("/admin");
     } catch { setError("Connection lost. Try again."); }

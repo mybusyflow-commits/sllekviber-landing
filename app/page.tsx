@@ -7,5 +7,5 @@ import { Questionnaire } from "@/components/sections/Questionnaire";
 import { About } from "@/components/sections/About";
 
 export default function Home() {
-  return <div className="creative-experience relative isolate min-h-screen text-ink"><Experience /><main id="story-root" className="relative z-10 overflow-clip"><Hero /><Problems /><Reveal /><Solutions /><Questionnaire /><About /></main></div>;
+  return <div className="creative-experience"><a className="skip-link" href="#questionnaire">Skip to the survey</a><Experience /><main id="story-root"><Hero /><Problems /><Reveal /><Solutions /><Questionnaire /><About /></main></div>;
 }

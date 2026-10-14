@@ -1,0 +1,16 @@
+{
+  "projectName": "SleekViber",
+  "projectId": "nameless-salad-69410646",
+  "regionId": "aws-us-east-2",
+  "productionBranchId": "br-soft-band-b4i4qv8b",
+  "productionBranchName": "production",
+  "databaseName": "sleekviber",
+  "consoleUrl": "https://console.neon.tech/app/projects/nameless-salad-69410646",
+  "provisionedAt": "2026-10-14T04:56:04Z",
+  "status": "connection-and-schema-pending",
+  "schemaCreated": false,
+  "localRecordsMigrated": false,
+  "developmentBranchCreated": false,
+  "localDatabase": "data/survey.db",
+  "verifiedBackup": "data/backups/survey-2026-10-14T04-12-05.905Z-b8825333-6011-4dde-8d8f-b74091690e74.db"
+}

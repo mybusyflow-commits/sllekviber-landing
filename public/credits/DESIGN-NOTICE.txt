@@ -1,0 +1,27 @@
+SleekViber design credits
+
+React Bits by David Haz:
+Official ScrollStack, GridMotion and GlareHover templates, restyled for SleekViber.
+CardSwap remains available in the project; it is no longer used in the hero.
+Adapted Magnet, MagnetLines, ScrollFloat, TextPressure, SplitText and PixelTransition.
+Changes include local fonts, semantic controls, reduced motion, visibility gating,
+React 19 compatibility, event-driven updates and a shared Lenis scroll owner.
+https://github.com/DavidHDev/react-bits
+License: /credits/REACT-BITS-LICENSE.txt
+
+GSAP and Lenis power scroll and reveal motion. Lucide supplies interface icons.
+Clash Display and General Sans are locally hosted; font licenses are retained in app/fonts.
+Typography specimens, route linework and state-responsive geometry are original content
+within the React Bits templates. They are illustrative design studies.
+Oryzo by Lusion was a visual pacing and interaction reference. No Oryzo assets or copy are used.
+The hero adapts Poimandres' floating-laptop template and its existing local model,
+using the installed React Three Fiber and Drei Float, Environment and RoundedBox.
+Adaptations add original illustrative website artwork, a fixed "Look inside"
+control, bounded pointer response, pause, reduced motion, demand rendering and
+visibility gating. No orbit or drag controls capture scrolling.
+https://github.com/pmndrs/examples/tree/main/examples/floating-laptop
+License: /models/PMNDRS-LICENSE.txt
+Studio Small 03 HDR by Greg Zaal / Poly Haven (CC0): https://polyhaven.com/a/studio_small_03
+Other archived 3D model sources remain credited in /models/LICENSES.txt.
+
+Wire Terrain: Canvas 2D adaptation inspired by the Originkit source supplied by the user. Scroll-driven perspective, valley/ridge and fog; no original WebGL shader code is included.
