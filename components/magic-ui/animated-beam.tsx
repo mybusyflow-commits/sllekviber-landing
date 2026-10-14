@@ -2,7 +2,8 @@
 "use client"
 
 import { useEffect, useId, useState, type RefObject } from "react"
-import { motion, useInView, useReducedMotion } from "motion/react"
+import { motion, useInView } from "motion/react"
+import { useMotionPreference } from "@/hooks/useMotionPreference"
 
 import { cn } from "@/lib/ui"
 
@@ -54,8 +55,9 @@ export const AnimatedBeam: React.FC<AnimatedBeamProps> = ({
   const id = useId()
   const [pathD, setPathD] = useState("")
   const [svgDimensions, setSvgDimensions] = useState({ width: 0, height: 0 })
-  const reduced = useReducedMotion()
+  const reduced = useMotionPreference()
   const visible = useInView(containerRef, { amount: .15 })
+  const running = visible && active && !reduced
 
   // Calculate the gradient coordinates based on the reverse prop
   const gradientCoordinates = reverse
@@ -154,7 +156,7 @@ export const AnimatedBeam: React.FC<AnimatedBeamProps> = ({
         d={pathD}
         strokeWidth={pathWidth}
         stroke={`url(#${id})`}
-        strokeOpacity={active ? "1" : "0"}
+        strokeOpacity={active && !reduced ? "1" : "0"}
         strokeLinecap="round"
       />
       <defs>
@@ -168,17 +170,17 @@ export const AnimatedBeam: React.FC<AnimatedBeamProps> = ({
             y1: "0%",
             y2: "0%",
           }}
-          animate={visible && active && reduced === false ? {
+          animate={running ? {
             x1: gradientCoordinates.x1,
             x2: gradientCoordinates.x2,
             y1: gradientCoordinates.y1,
             y2: gradientCoordinates.y2,
           } : { x1: "0%", x2: "0%", y1: "0%", y2: "0%" }}
           transition={{
-            delay,
-            duration,
+            delay: running ? delay : 0,
+            duration: running ? duration : 0,
             ease: [0.16, 1, 0.3, 1], // https://easings.net/#easeOutExpo
-            repeat,
+            repeat: running ? repeat : 0,
             repeatDelay,
           }}
         >

@@ -170,9 +170,9 @@ const ScrollStack = ({
 
       const viewHeight = windowed ? window.innerHeight : root.clientHeight;
       const viewTop = windowed ? 0 : root.getBoundingClientRect().top + root.clientTop;
-      const stackTop = resolveOffset(settings.stackPosition, viewHeight);
+      const requestedTop = resolveOffset(settings.stackPosition, viewHeight);
       const offset = settings.itemStackDistance;
-      const padTop = windowed ? 0 : stackTop;
+      const padTop = windowed ? 0 : requestedTop;
       if (layoutDirty || previousSettings !== settings) {
         slots = (Array.from(inner.children) as HTMLElement[]).filter(child => child.hasAttribute('data-stack-slot'));
         heights = slots.map(slot => slot.offsetHeight);
@@ -181,6 +181,12 @@ const ScrollStack = ({
         previousSettings = settings;
       }
       if (!slots.length) return;
+      // Tall phone chapters scroll their reading area before pinning their
+      // interaction panel. The last panel stays above the browser's bottom edge.
+      const stackTop = windowed && window.innerWidth < 1000
+        ? Math.min(24, viewHeight - Math.max(...heights) - 48 - (slots.length - 1) * offset)
+        : requestedTop;
+      write('pinTop', `${stackTop}px`, value => inner.style.setProperty('--stack-pin', value));
       const tops = slots.map(slot => slot.getBoundingClientRect().top);
       const lastPin = stackTop + (slots.length - 1) * offset;
       const endHeight =
@@ -217,7 +223,7 @@ const ScrollStack = ({
       slots.forEach((slot, i) => {
         const card = slot.firstElementChild as HTMLElement | null;
         if (!card) return;
-        const depth = motion.matches || window.innerWidth < 1000 ? 0 : depths[i];
+        const depth = motion.matches ? 0 : depths[i];
 
         const scale = Math.max(Math.min(settings.baseScale, 1), 1 - depth * settings.itemScale);
 
@@ -307,7 +313,7 @@ const ScrollStack = ({
     };
 
     const onScroll = () => {
-      if (windowed && (motion.matches || window.innerWidth < 1000)) return;
+      if (windowed && motion.matches) return;
       schedule();
       if (!gliding) settleSoon();
     };
@@ -394,7 +400,7 @@ const ScrollStack = ({
                 data-stack-slot=""
                 className="scroll-stack__slot"
                 style={{
-                  top: `calc(${toLength(stackPosition)} + ${index * itemStackDistance}px)`,
+                  top: `calc(var(--stack-pin, ${toLength(stackPosition)}) + ${index * itemStackDistance}px)`,
                   marginBottom: (items.length - 1 - index) * itemStackDistance,
                   zIndex: index + 1
                 }}

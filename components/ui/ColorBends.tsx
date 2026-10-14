@@ -163,7 +163,7 @@ export default function ColorBends({ moving, onReady, onError }: Props) {
     const draw = (now: number) => {
       frame = 0;
       if (lost) return;
-      // Keep movement event-driven while paused, and cap animated frames at 30fps.
+      // Draw continuously while visible, capped at 30fps.
       if (movingRef.current && now - lastDraw < 1000 / 30) { frame = requestAnimationFrame(draw); return; }
       const dt = Math.min(.05, Math.max(0, (now - lastDraw) / 1000));
       lastDraw = now;
@@ -191,13 +191,17 @@ export default function ColorBends({ moving, onReady, onError }: Props) {
     resize();
     const section = container.closest("section");
     const pointerMove = (event: PointerEvent) => {
-      if (!movingRef.current || event.pointerType !== "mouse" || event.buttons || !section) return;
+      if (!movingRef.current || (event.pointerType === "mouse" && event.buttons) || !section) return;
       const rect = section.getBoundingClientRect();
       target.set(((event.clientX - rect.left) / rect.width) * 2 - 1, 1 - ((event.clientY - rect.top) / rect.height) * 2);
     };
     const pointerLeave = () => target.set(0, 0);
+    const pointerUp = (event: PointerEvent) => { if (event.pointerType !== "mouse") pointerLeave(); };
     const contextLost = () => { lost = true; cancelAnimationFrame(frame); frame = 0; onError(); };
     section?.addEventListener("pointermove", pointerMove, { passive: true });
+    section?.addEventListener("pointerdown", pointerMove, { passive: true });
+    section?.addEventListener("pointerup", pointerUp, { passive: true });
+    section?.addEventListener("pointercancel", pointerLeave);
     section?.addEventListener("pointerleave", pointerLeave);
     renderer.domElement.addEventListener("webglcontextlost", contextLost);
     // Detect compile failure before reporting a usable animated surface.
@@ -210,6 +214,9 @@ export default function ColorBends({ moving, onReady, onError }: Props) {
       scheduleRef.current = null;
       observer.disconnect();
       section?.removeEventListener("pointermove", pointerMove);
+      section?.removeEventListener("pointerdown", pointerMove);
+      section?.removeEventListener("pointerup", pointerUp);
+      section?.removeEventListener("pointercancel", pointerLeave);
       section?.removeEventListener("pointerleave", pointerLeave);
       renderer.domElement.removeEventListener("webglcontextlost", contextLost);
       geometry.dispose(); material.dispose(); renderer.dispose(); renderer.forceContextLoss();

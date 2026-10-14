@@ -511,7 +511,7 @@ const Threads = ({
     };
 
     const onPointerMove = (event: PointerEvent) => {
-      if (reduce || settingsRef.current.paused || event.pointerType !== 'mouse' || event.buttons) return;
+      if (reduce || settingsRef.current.paused || (event.pointerType === 'mouse' && event.buttons)) return;
       const rect = container.getBoundingClientRect();
       const x = (event.clientX - rect.left) / Math.max(1, rect.width);
       const y = (event.clientY - rect.top) / Math.max(1, rect.height);
@@ -540,6 +540,7 @@ const Threads = ({
       last = 0;
       wake();
     };
+    const onPointerUp = (event: PointerEvent) => { if (event.pointerType !== 'mouse') onPointerLeave(); };
 
     const resizeObserver = new ResizeObserver(resize);
     resizeObserver.observe(container);
@@ -555,6 +556,9 @@ const Threads = ({
     const onMotionChange = () => { reduce = motionPreference.matches; wake(); };
     const onContextLost = () => { alive = false; cancelAnimationFrame(raf); onUnavailable?.(); };
     pointerSurface.addEventListener('pointermove', onPointerMove, { passive: true });
+    pointerSurface.addEventListener('pointerdown', onPointerMove, { passive: true });
+    pointerSurface.addEventListener('pointerup', onPointerUp, { passive: true });
+    pointerSurface.addEventListener('pointercancel', onPointerLeave);
     pointerSurface.addEventListener('pointerleave', onPointerLeave);
     motionPreference.addEventListener('change', onMotionChange);
     canvas.addEventListener('webglcontextlost', onContextLost);
@@ -575,6 +579,9 @@ const Threads = ({
       resizeObserver.disconnect();
       intersection.disconnect();
       pointerSurface.removeEventListener('pointermove', onPointerMove);
+      pointerSurface.removeEventListener('pointerdown', onPointerMove);
+      pointerSurface.removeEventListener('pointerup', onPointerUp);
+      pointerSurface.removeEventListener('pointercancel', onPointerLeave);
       pointerSurface.removeEventListener('pointerleave', onPointerLeave);
       motionPreference.removeEventListener('change', onMotionChange);
       canvas.removeEventListener('webglcontextlost', onContextLost);

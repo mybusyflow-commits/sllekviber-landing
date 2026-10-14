@@ -2,8 +2,9 @@
 
 import dynamic from "next/dynamic";
 import { Component, useCallback, useEffect, useRef, useState, type ReactNode } from "react";
-import { motion, useReducedMotion } from "motion/react";
-import { ArrowUpRight, Pause, Play } from "lucide-react";
+import { motion } from "motion/react";
+import { useMotionPreference } from "@/hooks/useMotionPreference";
+import { ArrowUpRight } from "lucide-react";
 import { SiteHeader } from "@/components/ui/SiteHeader";
 
 const ColorBends = dynamic(() => import("@/components/ui/ColorBends"), { ssr: false });
@@ -19,10 +20,9 @@ class BackgroundBoundary extends Component<{ children: ReactNode; onError: () =>
 // https://ui.aceternity.com/components/hero-sections-free
 export function Hero() {
   const root = useRef<HTMLElement>(null);
-  const reduced = useReducedMotion();
+  const reduced = useMotionPreference();
   const [visible, setVisible] = useState(false);
   const [loaded, setLoaded] = useState(false);
-  const [paused, setPaused] = useState(false);
   const [status, setStatus] = useState<"loading" | "ready" | "unavailable">("loading");
   const onReady = useCallback(() => setStatus("ready"), []);
   const onError = useCallback(() => setStatus("unavailable"), []);
@@ -40,10 +40,9 @@ export function Hero() {
     return () => { observer.disconnect(); document.removeEventListener("visibilitychange", update); };
   }, []);
 
-  const moving = visible && !paused && reduced === false;
-  const motionLabel = status === "unavailable" ? "Background motion unavailable" : status === "loading" ? "Loading background motion" : reduced ? "Background motion reduced by your preference" : paused ? "Play background motion" : "Pause background motion";
+  const moving = visible && reduced === false;
 
-  return <section ref={root} id="top" className="hero-section hero-immersive" aria-labelledby="hero-title">
+  return <section ref={root} id="top" className="hero-section hero-immersive" data-moving={moving} aria-labelledby="hero-title">
     <div className={`hero-atmosphere ${status === "ready" ? "hero-atmosphere-ready" : ""}`} aria-hidden="true">
       <div className="hero-atmosphere-still" />
       {loaded && status !== "unavailable" && <BackgroundBoundary onError={onError}><ColorBends moving={moving} onReady={onReady} onError={onError} /></BackgroundBoundary>}
@@ -63,9 +62,7 @@ export function Hero() {
     </div>
     <div className="hero-foot">
       <p className="hero-development">SleekViber is in development.<br />Your answers help decide what we build first.</p>
-      <div className="hero-foot-actions"><a href="#problems">Why we&apos;re building SleekViber <ArrowUpRight size={17} /></a>
-        <button type="button" className="hero-motion" onClick={() => setPaused(value => !value)} disabled={reduced !== false || status !== "ready"} aria-pressed={paused || reduced === true} aria-label={motionLabel} title={motionLabel}>{paused || reduced ? <Play size={16} /> : <Pause size={16} />}</button>
-      </div>
+      <div className="hero-foot-actions"><a href="#problems">Why we&apos;re building SleekViber <ArrowUpRight size={17} /></a></div>
     </div>
   </section>;
 }

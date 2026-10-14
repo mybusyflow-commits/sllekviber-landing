@@ -23,8 +23,8 @@
   "status": "production-live",
   "productionDeploymentCreated": true,
   "productionDomainsAssigned": true,
-  "stagedDeploymentId": "dpl_EqT7rc9rLdAZFVrfiYLTZSaG2NHT",
-  "stagedDeploymentUrl": "https://sleekviber-mo1q8cu4s-shreyanshkrishna279-6139s-projects.vercel.app",
+  "stagedDeploymentId": "dpl_A5wzjNp8Zk6rp8mBWVL1XPLmhURv",
+  "stagedDeploymentUrl": "https://sleekviber-rm822gagn-shreyanshkrishna279-6139s-projects.vercel.app",
   "deploymentProtection": "standard-production-public-preview-protected",
   "latestAccessCheck": {
     "status": "verified",
@@ -37,5 +37,6 @@
   },
   "productionUrl": "https://sleekviber-shreyanshkrishna279-6139s-projects.vercel.app",
   "heroUpdate": "immersive-react-bits-color-bends",
-  "sectionUpdate": "contextual-library-interactions-and-guided-survey"
+  "sectionUpdate": "contextual-library-interactions-and-guided-survey",
+  "mobileUpdate": "automatic-fields-adaptive-scroll-stack-and-visible-connections"
 }

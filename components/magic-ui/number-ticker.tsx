@@ -2,7 +2,8 @@
 "use client"
 
 import { useEffect, useRef, type ComponentPropsWithoutRef } from "react"
-import { useInView, useMotionValue, useSpring, useReducedMotion } from "motion/react"
+import { useInView, useMotionValue, useSpring } from "motion/react"
+import { useMotionPreference } from "@/hooks/useMotionPreference"
 
 import { cn } from "@/lib/ui"
 
@@ -30,7 +31,7 @@ export function NumberTicker({
     stiffness: 100,
   })
   const isInView = useInView(ref, { once: true, margin: "0px" })
-  const reduced = useReducedMotion()
+  const reduced = useMotionPreference()
 
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout> | null = null

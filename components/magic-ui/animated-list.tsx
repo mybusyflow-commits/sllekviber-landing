@@ -7,17 +7,18 @@ import React, {
   useState,
   type ComponentPropsWithoutRef,
 } from "react"
-import { AnimatePresence, motion, useReducedMotion, type MotionProps } from "motion/react"
+import { AnimatePresence, motion, type MotionProps } from "motion/react"
+import { useMotionPreference } from "@/hooks/useMotionPreference"
 
 import { cn } from "@/lib/ui"
 
 export function AnimatedListItem({ children }: { children: React.ReactNode }) {
-  const reduced = useReducedMotion()
+  const reduced = useMotionPreference()
   const animations: MotionProps = {
     initial: false,
     animate: reduced !== false ? { opacity: 1, y: 0 } : { opacity: [.7, 1], y: [8, 0] },
     exit: { opacity: 0 },
-    transition: { type: "spring", stiffness: 350, damping: 40 },
+    transition: reduced ? { duration: 0 } : { type: "spring", stiffness: 350, damping: 40 },
   }
 
   return (
