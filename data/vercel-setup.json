@@ -3,13 +3,38 @@
   "projectId": "prj_cNvdgI5ywrgbDsSgyxUBSNfNmP81",
   "accountId": "team_wfmcXebLjsWbM3cLZASlgmow",
   "nodeVersion": "24.x",
-  "status": "prepared-not-deployed",
-  "productionDeploymentCreated": false,
+  "requestedDomain": "sleekviber.publicvm.com",
+  "dnsProvider": "DNSExit",
+  "domainStatus": "added-verification-required",
+  "domainVerified": false,
+  "browserProjectAccess": "available",
+  "productionPublicOriginConfigured": true,
+  "productionSecretsConfigured": true,
+  "configuredProductionSecrets": [
+    "DATABASE_URL",
+    "ADMIN_PASSWORD",
+    "ADMIN_SESSION_SECRET"
+  ],
+  "dnsExitBrowserAccess": "available",
+  "dnsExitRecordScope": "sleekviber.publicvm.com",
+  "requiredVerificationHost": "_vercel.publicvm.com",
+  "requiredCnameHost": "sleekviber.publicvm.com",
+  "requiredCnameTarget": "bc2730f955f5ddd7.vercel-dns-017.com",
+  "status": "production-live",
+  "productionDeploymentCreated": true,
+  "productionDomainsAssigned": true,
+  "stagedDeploymentId": "dpl_8suLjkAgF2gEPkbcpsXrN7tE3mkJ",
+  "stagedDeploymentUrl": "https://sleekviber-ifmu8su9r-shreyanshkrishna279-6139s-projects.vercel.app",
+  "deploymentProtection": "standard-production-public-preview-protected",
   "latestAccessCheck": {
-    "status": "forbidden",
-    "httpStatus": 403,
-    "scope": "shreyanshkrishna279-6139s-projects",
-    "availableTeamCount": 0,
-    "cliFallbackAvailable": false
-  }
+    "status": "verified",
+    "websiteHttpStatus": 200,
+    "healthHttpStatus": 200,
+    "resultsHttpStatus": 200,
+    "unauthenticatedStatsHttpStatus": 401,
+    "existingPollResponses": 3,
+    "cliFallbackAvailable": true
+  },
+  "productionUrl": "https://sleekviber-shreyanshkrishna279-6139s-projects.vercel.app",
+  "heroUpdate": "immersive-react-bits-color-bends"
 }

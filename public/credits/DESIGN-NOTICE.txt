@@ -14,11 +14,17 @@ Clash Display and General Sans are locally hosted; font licenses are retained in
 Typography specimens, route linework and state-responsive geometry are original content
 within the React Bits templates. They are illustrative design studies.
 Oryzo by Lusion was a visual pacing and interaction reference. No Oryzo assets or copy are used.
-The hero adapts Poimandres' floating-laptop template and its existing local model,
-using the installed React Three Fiber and Drei Float, Environment and RoundedBox.
-Adaptations add original illustrative website artwork, a fixed "Look inside"
-control, bounded pointer response, pause, reduced motion, demand rendering and
-visibility gating. No orbit or drag controls capture scrolling.
+The current hero adapts Aceternity's free Hero Section One composition and entrance
+choreography with SleekViber typography, copy, navigation and fixed survey action:
+https://ui.aceternity.com/components/hero-sections-free
+Aceternity license: https://ui.aceternity.com/licence
+Its immersive background uses React Bits ColorBends' original shader, customized
+with the brand palette, bounded pointer influence, a pause control, reduced motion,
+30fps and resolution caps, offscreen/hidden-page suspension, and static fallback.
+https://github.com/DavidHDev/react-bits/tree/main/src/ts-default/Backgrounds/ColorBends
+No floating models are mounted by the current hero.
+
+Archived hero: Poimandres' floating-laptop template and local model:
 https://github.com/pmndrs/examples/tree/main/examples/floating-laptop
 License: /models/PMNDRS-LICENSE.txt
 Studio Small 03 HDR by Greg Zaal / Poly Haven (CC0): https://polyhaven.com/a/studio_small_03

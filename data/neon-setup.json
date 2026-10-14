@@ -7,9 +7,10 @@
   "databaseName": "sleekviber",
   "consoleUrl": "https://console.neon.tech/app/projects/nameless-salad-69410646",
   "provisionedAt": "2026-10-14T04:56:04Z",
-  "status": "connection-and-schema-pending",
-  "schemaCreated": false,
-  "localRecordsMigrated": false,
+  "status": "schema-and-migration-verified",
+  "schemaCreated": true,
+  "localRecordsMigrated": true,
+  "verifiedRecords": { "pulse_responses": 3, "survey_starts": 4, "waitlist": 0, "responses": 6 },
   "developmentBranchCreated": false,
   "localDatabase": "data/survey.db",
   "verifiedBackup": "data/backups/survey-2026-10-14T04-12-05.905Z-b8825333-6011-4dde-8d8f-b74091690e74.db"

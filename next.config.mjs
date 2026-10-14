@@ -1,8 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   devIndicators: false,
-  // Keep generated output separate from an older OneDrive-backed .next cache.
-  distDir: ".next-local",
+  // Vercel packages the standard .next directory; local previews keep a separate cache.
+  distDir: process.env.VERCEL_ENV ? ".next" : ".next-local",
   poweredByHeader: false,
   async headers() {
     const dev = process.env.NODE_ENV !== "production";

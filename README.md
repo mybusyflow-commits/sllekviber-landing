@@ -34,9 +34,9 @@ Local responses live in SQLite at `data/survey.db`. This build creates `pulse_re
 
 Use [Neon through Vercel Storage](https://vercel.com/marketplace/neon/neon). [Vercel does not support a shared persistent SQLite file](https://vercel.com/kb/guide/is-sqlite-supported-in-vercel).
 
-A [SleekViber Neon project](https://console.neon.tech/app/projects/nameless-salad-69410646) was provisioned on 14 October 2026 in AWS US East (Ohio), with a `production` branch (`br-soft-band-b4i4qv8b`) and the `sleekviber` database. Connection configuration, survey schema setup, and migration are still pending. Reuse this project rather than creating a duplicate. The app continues to use local SQLite until `DATABASE_URL` is configured.
+A [SleekViber Neon project](https://console.neon.tech/app/projects/nameless-salad-69410646) was provisioned on 14 October 2026 in AWS US East (Ohio), with a `production` branch (`br-soft-band-b4i4qv8b`) and the `sleekviber` database. The configured connection has been verified, the survey schema created, and the local records migrated: 3 poll responses, 4 survey starts, 0 waitlist entries and 6 legacy responses. SQLite remains intact, with a fresh verified backup. Reuse this project rather than creating a duplicate.
 
-The Vercel project `sleekviber` has also been prepared, with Node 24.x and Next.js configuration. Its IDs are recorded in `data/vercel-setup.json`. No deployment has been created: publication is waiting for hosted database configuration and verification. The latest scoped API check returned 403 for `shreyanshkrishna279-6139s-projects`; connected-account/team access must also be resolved. Reuse this Vercel project.
+The Vercel project `sleekviber` is live at [its public production URL](https://sleekviber-shreyanshkrishna279-6139s-projects.vercel.app), with Node 24.x, Next.js and Neon storage. Its IDs are recorded in `data/vercel-setup.json`. Anonymous site/health/results requests succeeded; private statistics require an admin session. Production secrets are scoped only to Production. Reuse this project; custom-domain DNS is managed separately.
 
 1. Connect the existing SleekViber Neon project to the Vercel project's Storage integration. Keep function placement near the database region.
 2. Set the connection URL as `DATABASE_URL` in Vercel. Keep it server-only; never prefix it with `NEXT_PUBLIC_`. Set `ADMIN_PASSWORD`, `ADMIN_SESSION_SECRET` and `NEXT_PUBLIC_SITE_URL` as well.
@@ -49,6 +49,16 @@ Use separate Neon branches/databases for Preview and Production so preview votes
 Without `DATABASE_URL`, `npm run db:check` validates the local SQLite integrity and reports counts. `npm run db:backup` makes a new verified SQLite snapshot in `data/backups/`, including committed WAL data. Backups are ignored by Git and never overwrite a prior backup. Keep durable copies outside the deployment checkout before replacing a server or migrating. Hosted backups are managed through Neon.
 
 After `npm run build`, run `npm run test:database` for isolated persistence, validation, concurrent duplicate, admin-access, security-header, asset and backup tests. Run `npm run test:security` for request parsing and session checks, and `npm run lint` for application linting. The suites use temporary databases and never submit test votes to the real database. Hosted queries still require verification with a real Neon connection URL. `/api/health` reports storage readiness without exposing records or credentials. See [SECURITY.md](SECURITY.md) for the current audit evidence and remaining limitations.
+
+## Production domain
+
+The requested public address is `https://sleekviber.publicvm.com`, managed through DNSExit. [DNSExit supports full DNS control and external hosting for its free hostnames](https://dnsexit.com/domains/free-second-level-domains/). The hostname is now attached to the existing Vercel project but is not verified. Browser access to Vercel and DNSExit works; the connector still returns 403. The hosted database connection, schema and record migration are verified; Production Secrets are saved in Vercel.
+
+Vercel currently requires a CNAME from `sleekviber.publicvm.com` to `bc2730f955f5ddd7.vercel-dns-017.com`, plus ownership verification through a TXT record at `_vercel.publicvm.com` because the parent domain is associated with another Vercel account. Get the current TXT value from the project's domain settings. `_vercel.sleekviber.publicvm.com` is a different hostname and will not satisfy this challenge. If the DNSExit account cannot edit the required parent-zone record, ask DNSExit to assist with verification or Vercel to provide verification scoped to the delegated hostname. Do not redirect traffic before the hosted app and database pass verification.
+
+The signed-in DNSExit editor was inspected: both TXT and advanced records append `.sleekviber.publicvm.com` to the name. An absolute-name preview also appends that suffix, so the panel cannot create the required parent-zone TXT record. No incorrect record was saved and the existing A/CNAME records remain unchanged.
+
+Set `NEXT_PUBLIC_SITE_URL=https://sleekviber.publicvm.com` in Vercel's Production environment for social metadata when connecting the domain. Attach the exact hostname to the existing SleekViber Vercel project and enter the DNS/ownership records it returns in the [DNSExit domain panel](https://dnsexit.com/Direct.sv?cmd=userDomainPanel&domainname=sleekviber.publicvm.com); do not assume a universal A record or CNAME target. Preserve unrelated DNS records. Stage and verify the production build, database migration, poll results, admin authentication, HTTPS and public access before directing the domain to it.
 
 ## Experience
 - Next.js App Router, TypeScript, Tailwind, GSAP ScrollTrigger and Lenis.

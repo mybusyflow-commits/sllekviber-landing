@@ -1,0 +1,23 @@
+# Deployment uploads contain source and public assets only.
+.git
+.vercel
+node_modules
+.next
+.next-local
+.local
+.impeccable
+.agents
+.codex
+.aws
+.env*
+!.env.example
+data
+out
+build
+three.js-master
+gsap-public
+__MACOSX
+.asset-sources
+*.log
+*.pem
+*.tsbuildinfo
