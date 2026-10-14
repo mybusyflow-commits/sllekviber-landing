@@ -23,8 +23,8 @@
   "status": "production-live",
   "productionDeploymentCreated": true,
   "productionDomainsAssigned": true,
-  "stagedDeploymentId": "dpl_8suLjkAgF2gEPkbcpsXrN7tE3mkJ",
-  "stagedDeploymentUrl": "https://sleekviber-ifmu8su9r-shreyanshkrishna279-6139s-projects.vercel.app",
+  "stagedDeploymentId": "dpl_EqT7rc9rLdAZFVrfiYLTZSaG2NHT",
+  "stagedDeploymentUrl": "https://sleekviber-mo1q8cu4s-shreyanshkrishna279-6139s-projects.vercel.app",
   "deploymentProtection": "standard-production-public-preview-protected",
   "latestAccessCheck": {
     "status": "verified",
@@ -32,9 +32,10 @@
     "healthHttpStatus": 200,
     "resultsHttpStatus": 200,
     "unauthenticatedStatsHttpStatus": 401,
-    "existingPollResponses": 3,
+    "existingPollResponses": 6,
     "cliFallbackAvailable": true
   },
   "productionUrl": "https://sleekviber-shreyanshkrishna279-6139s-projects.vercel.app",
-  "heroUpdate": "immersive-react-bits-color-bends"
+  "heroUpdate": "immersive-react-bits-color-bends",
+  "sectionUpdate": "contextual-library-interactions-and-guided-survey"
 }

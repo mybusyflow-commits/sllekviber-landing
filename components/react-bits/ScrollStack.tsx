@@ -237,7 +237,10 @@ const ScrollStack = ({
         write(`dim${i}`, dim.toFixed(3), value => {
           card.style.setProperty('--scroll-stack-dim', value);
         });
-        write(`covered${i}`, depth >= .999 ? 'true' : 'false', value => { card.dataset.stackCovered = value; });
+        write(`covered${i}`, depth >= .999 ? 'true' : 'false', value => {
+          card.dataset.stackCovered = value;
+          card.inert = value === 'true';
+        });
       });
 
       const done = slots.length > 1 && lastCover >= 0.999;
@@ -369,6 +372,7 @@ const ScrollStack = ({
       window.removeEventListener('resize', resize);
       motion.removeEventListener('change', resize);
       document.removeEventListener('visibilitychange', resize);
+      inner.querySelectorAll<HTMLElement>('.scroll-stack-card').forEach(card => { card.inert = false; });
       scheduleRef.current = null;
     };
   }, [useWindowScroll]);

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { ArrowUpRight, RefreshCw, Plus } from "lucide-react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { requestJson } from "@/lib/client-request";
+import { NumberTicker } from "@/components/magic-ui/number-ticker";
 type Results = { total: number; today: number; q1: { option: string; count: number }[]; q2: { option: string; count: number }[] };
 
 function ResultRows({ items, total }: { items: Results["q1"]; total: number }) {
@@ -41,15 +42,15 @@ export function SurveyResults({ submitted }: { submitted: boolean }) {
     const frame = requestAnimationFrame(() => ScrollTrigger.refresh());
     return () => cancelAnimationFrame(frame);
   }, [open, results, error]);
-  return <details className="survey-results" onToggle={event => setOpen(event.currentTarget.open)}>
+  return <details id="survey-results" className="survey-results survey-results-board" onToggle={event => setOpen(event.currentTarget.open)}>
     <summary><span>See the survey results <ArrowUpRight size={17} /></span><Plus className="results-toggle" size={20} /></summary>
     <div className="results-content" aria-busy={loading}>
       <div className="results-heading"><div><h3>The response so far.</h3><p>Live totals from the current questionnaire.</p></div><button type="button" disabled={loading} onClick={() => setRefresh(value => value + 1)} aria-label="Refresh survey results"><RefreshCw size={17} className={loading ? "loading-spinner" : ""} /></button></div>
       <p className="sr-only" role="status">{loading ? "Loading survey results" : results ? `${results.total} survey ${results.total === 1 ? "response" : "responses"}` : ""}</p>
       {error && <p className="results-error" role="alert">{error}</p>}
       {!results && loading && <p className="results-loading">Loading responses…</p>}
-      {results && <><div className="results-total"><strong>{results.total}</strong><span>{results.total === 1 ? "response" : "responses"}<small>{results.today} submitted today (UTC)</small></span></div>
-        {results.total === 0 ? <p className="results-empty">No responses yet. Be the first to help shape SleekViber.</p> : <><h4>How respondents feel</h4><ResultRows items={results.q1} total={results.total} /><h4>Where current platforms fall short</h4><p className="results-explainer">Up to three choices per response. Percentages can add up to more than 100%.</p><ResultRows items={results.q2} total={results.total} /></>}
+      {results && <><div className="results-total"><strong aria-label={String(results.total)}><NumberTicker value={results.total} className="results-number" aria-hidden="true" /></strong><span>{results.total === 1 ? "response" : "responses"}<small>{results.today} submitted today (UTC)</small></span></div>
+        {results.total === 0 ? <p className="results-empty">No responses yet. Be the first to help shape SleekViber.</p> : <div className="results-chart-grid"><div><h4>How respondents feel</h4><ResultRows items={results.q1} total={results.total} /></div><div><h4>Where current platforms fall short</h4><p className="results-explainer">Up to three choices per response. Percentages can add up to more than 100%.</p><ResultRows items={results.q2} total={results.total} /></div></div>}
         <p className="results-note">Current questionnaire only. Results update every 30 seconds while open. These responses are feedback, not a representative poll.</p>
       </>}
     </div>

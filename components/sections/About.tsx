@@ -4,6 +4,8 @@ import { ArrowUpRight, LoaderCircle } from "lucide-react";
 import { SplitHeadline } from "@/components/ui/SplitHeadline";
 import { TextPressure } from "@/components/react-bits/TextPressure";
 import { requestJson } from "@/lib/client-request";
+import { ClosingAtmosphere } from "@/components/ui/ClosingAtmosphere";
+import { InteractiveHoverButton } from "@/components/magic-ui/interactive-hover-button";
 export function About() {
   const [email, setEmail] = useState("");
   const [pending, setPending] = useState(false);
@@ -18,10 +20,11 @@ export function About() {
     } catch { setStatus("Connection lost. Please try again."); }
     finally { setPending(false); }
   }
-  return <section id="about" className="about-section" aria-labelledby="about-title">
+  return <section id="about" className="about-section immersive-close" aria-labelledby="about-title">
+    <ClosingAtmosphere />
     <div className="about-intro"><h2 id="about-title"><SplitHeadline text="Good work deserves a better starting point." /></h2><p data-enter>Building with AI should leave you with work you can stand behind. That&apos;s what we&apos;re working on at SleekViber.</p></div>
     <div className="waitlist-area"><div><h3>Be here when we launch.</h3><p>Leave your email. We&apos;ll send you a launch update.</p></div>
-      <form onSubmit={join} className="waitlist-form"><label htmlFor="waitlist-email">Email address</label><div className="waitlist-input-row"><input id="waitlist-email" type="email" required maxLength={254} autoComplete="email" value={email} onChange={event => setEmail(event.target.value)} disabled={done || pending} placeholder="you@example.com" aria-describedby="waitlist-status" /><button type="submit" disabled={pending || done}>{pending ? <LoaderCircle size={19} className="loading-spinner" aria-hidden="true" /> : <ArrowUpRight size={20} aria-hidden="true" />}{done ? "You're on the list" : pending ? "Joining" : "Join the waitlist"}</button></div><p role="status" id="waitlist-status">{status}</p></form>
+      <form onSubmit={join} className="waitlist-form"><label htmlFor="waitlist-email">Email address</label><div className="waitlist-input-row"><input id="waitlist-email" type="email" required maxLength={254} autoComplete="email" value={email} onChange={event => setEmail(event.target.value)} disabled={done || pending} placeholder="you@example.com" aria-describedby="waitlist-status" /><InteractiveHoverButton type="submit" disabled={pending || done} aria-busy={pending}>{pending && <LoaderCircle size={16} className="loading-spinner" aria-hidden="true" />}{done ? "You're on the list" : pending ? "Joining" : "Join the waitlist"}</InteractiveHoverButton></div><p role="status" id="waitlist-status">{status}</p></form>
     </div>
     <a href="#top" className="footer-wordmark" aria-label="SleekViber, back to top"><TextPressure text="SleekViber" /><ArrowUpRight aria-hidden="true" strokeWidth={1} /></a>
     <footer><span>© {new Date().getFullYear()} SleekViber</span><span>Coming soon.</span><nav aria-label="Footer navigation"><a href="#solutions">Our approach</a><a href="#questionnaire">Take the survey</a><a href="/credits/DESIGN-NOTICE.txt">Credits</a></nav></footer>

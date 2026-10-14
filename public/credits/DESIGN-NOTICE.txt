@@ -4,6 +4,13 @@ React Bits by David Haz:
 Official ScrollStack, GridMotion and GlareHover templates, restyled for SleekViber.
 CardSwap remains available in the project; it is no longer used in the hero.
 Adapted Magnet, MagnetLines, ScrollFloat, TextPressure, SplitText and PixelTransition.
+The guided survey adapts React Bits Stepper; the closing background adapts Threads.
+Stepper retains its native sliding panes and progress rail, with Lucide icons,
+controlled async saving, accessible inactive panes and SleekViber styling.
+Threads retains its original shader with visibility/reduced-motion gating,
+30fps/resolution caps, pointer bounds, a pause control and static fallback.
+https://github.com/DavidHDev/react-bits/tree/main/src/ts-default/Components/Stepper
+https://github.com/DavidHDev/react-bits/tree/main/src/ts-default/Backgrounds/Threads
 Changes include local fonts, semantic controls, reduced motion, visibility gating,
 React 19 compatibility, event-driven updates and a shared Lenis scroll owner.
 https://github.com/DavidHDev/react-bits
@@ -23,6 +30,15 @@ with the brand palette, bounded pointer influence, a pause control, reduced moti
 30fps and resolution caps, offscreen/hidden-page suspension, and static fallback.
 https://github.com/DavidHDev/react-bits/tree/main/src/ts-default/Backgrounds/ColorBends
 No floating models are mounted by the current hero.
+
+Magic UI by Magic UI Design (MIT):
+Animated Beam powers the illustrative route and platform diagrams.
+Animated List's item transition powers the illustrative permission states.
+Number Ticker displays actual aggregate survey totals; Interactive Hover Button
+provides the fixed-position closing action. Templates use the installed Motion
+and Lucide libraries, with reduced motion and bounded animation.
+https://github.com/magicuidesign/magicui/tree/main/registry/magicui
+License: /credits/MAGIC-UI-LICENSE.txt
 
 Archived hero: Poimandres' floating-laptop template and local model:
 https://github.com/pmndrs/examples/tree/main/examples/floating-laptop
